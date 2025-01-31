@@ -7,14 +7,16 @@ import {
   CreateProductService, 
   GetAllProductService, 
   GetProductService, 
-  RemoveProductService
+  RemoveProductService,
+  UpdateProductService
 } from "@services/Product";
 
 import { 
   CreateProductController, 
   GetAllProductController, 
   GetProductController, 
-  RemoveProductController
+  RemoveProductController,
+  UpdateProductController
 } from "@controllers/produtcts";
 
 const productRouter = Router();
@@ -34,10 +36,14 @@ const getAllProductController = new GetAllProductController(getAllProductService
 const removeProductService = new RemoveProductService(productRepository);
 const removeProductController = new RemoveProductController(removeProductService);
 
+const updateProductService = new UpdateProductService(productRepository);
+const updateProductController = new UpdateProductController(updateProductService);
+
 productRouter.get("/:id", getProductController.handle.bind(getProductController));
 productRouter.post("/", createProductController.handle.bind(createProductController));
 productRouter.get("/", getAllProductController.handle.bind(getAllProductController));
 productRouter.delete("/:id", removeProductController.handle.bind(removeProductController));
+productRouter.patch("/", updateProductController.handle.bind(updateProductController));
 
 export { 
   productRouter 

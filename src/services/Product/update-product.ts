@@ -4,6 +4,10 @@ import { ProductModel } from "@models/entities";
 
 import { GetProductService } from "./get-product";
 
+export interface IUpdateProductService {
+  execute(id: string, data: Partial<ProductDTO>): Promise<boolean>;
+}
+
 export class UpdateProductService {
   constructor(private readonly productRepository: IProductRepository) {}
 
