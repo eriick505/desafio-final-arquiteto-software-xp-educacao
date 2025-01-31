@@ -8,7 +8,7 @@ export interface IUpdateProductService {
   execute(id: string, data: Partial<ProductDTO>): Promise<boolean>;
 }
 
-export class UpdateProductService {
+export class UpdateProductService implements IUpdateProductService {
   constructor(private readonly productRepository: IProductRepository) {}
 
   async execute(id: string, data: Partial<ProductDTO>) {

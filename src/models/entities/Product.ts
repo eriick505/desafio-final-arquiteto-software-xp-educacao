@@ -15,7 +15,15 @@ export interface ICreateProduct {
   rating: number;
 }
 
-export class ProductModel {
+export interface IProductModel {
+  id: string;
+  name: string;
+  price: number;
+  categoryId: string;
+  rating: number;
+}
+
+export class ProductModel implements IProductModel {
   private _id: string;
   private _props: IProductModelProps;
 

@@ -2,8 +2,17 @@ import express from 'express'
 import cors from "cors";
 
 import { productRouter } from '@routes/ProductRouter';
+import { sequelize } from '@config/sequelize';
 
 class App {
+  static initSequelize() {
+    sequelize.sync()
+      .then(() => console.log('Database & tables created!'))
+      .catch(err => console.log('Error: ', err));
+
+    return sequelize;
+  }
+
   static init() {
     const app = express();
     const port = 3000;
@@ -17,6 +26,8 @@ class App {
     app.use(cors(corsOptions))
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
+
+    App.initSequelize();
 
     app.use("/products", productRouter);
 

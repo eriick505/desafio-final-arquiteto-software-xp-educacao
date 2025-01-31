@@ -1,4 +1,5 @@
 import { ProductDTO } from "@models/dto";
+import { ProductModel } from "@models/entities";
 import { IProductRepository } from "@models/repositories";
 
 export interface IGetProductService {
@@ -11,6 +12,10 @@ export class GetProductService implements IGetProductService {
   async execute(id: string) {
     const product = await this.productRepository.findById(id);
 
-    return product?.toDTO()
+    if (!product) {
+      return undefined;
+    }
+
+    return ProductModel.create(product, product.id).toDTO();
   }
 }

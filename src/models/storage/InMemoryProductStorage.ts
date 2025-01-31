@@ -1,19 +1,19 @@
-import { ProductModel } from "@models/entities/Product";
+import { IProductModel } from "@models/entities/Product";
 import { IStorage } from "./IStorage";
 
-export class InMemoryProductStorage implements IStorage<ProductModel> {
-  private readonly storage: Map<string, ProductModel> = new Map();
+export class InMemoryProductStorage implements IStorage<IProductModel> {
+  private readonly storage: Map<string, IProductModel> = new Map();
 
-  async create(product: ProductModel): Promise<boolean> {
+  async create(product: IProductModel): Promise<boolean> {
     this.storage.set(product.id, product);
     return true;
   }
 
-  async findById(id: string): Promise<ProductModel | null> {
+  async findById(id: string): Promise<IProductModel | null> {
     return this.storage.get(id) || null;
   }
 
-  async findAll(): Promise<ProductModel[]> {
+  async findAll(): Promise<IProductModel[]> {
     return Array.from(this.storage.values());
   }
 
@@ -21,7 +21,7 @@ export class InMemoryProductStorage implements IStorage<ProductModel> {
     return this.storage.delete(id);
   }
 
-  async update(product: ProductModel): Promise<boolean> {
+  async update(product: IProductModel): Promise<boolean> {
     this.storage.set(product.id, product);
     return true;
   }

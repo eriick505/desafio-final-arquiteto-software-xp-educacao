@@ -8,7 +8,9 @@
       "@configs/*": ["./src/configs/*"],
       "@routes/*": ["./src/routes/*"],
       "@types/*": ["./src/types/*"],
-      "@helpers/*": ["./src/helpers/*"]
+      "@helpers/*": ["./src/helpers/*"],
+      "@core/*": ["./src/core/*"],
+      "@config/*": ["./src/config/*"]
     },
     "target": "ES6",
     "module": "commonjs",
