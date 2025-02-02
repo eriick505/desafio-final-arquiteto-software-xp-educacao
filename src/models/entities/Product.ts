@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 import { ProductDTO } from "@models/dto";
 import { RatingModel } from "./Rating";
 
@@ -33,17 +35,17 @@ export class ProductModel implements IProductModel {
   }
 
   public static create(props: ICreateProduct, id?: string) {
-    const productId = id || Math.random().toString(36).substring(7);
+    const productId = id || randomUUID();
 
     const rating = RatingModel.create({ rating: props.rating });
 
     return new ProductModel(
-      { 
-        name: props.name, 
-        price: props.price, 
+      {
+        name: props.name,
+        price: props.price,
         categoryId: props.categoryId,
-        rating: rating
-      }, 
+        rating: rating,
+      },
       productId
     );
   }
