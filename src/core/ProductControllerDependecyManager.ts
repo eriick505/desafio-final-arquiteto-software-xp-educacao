@@ -1,36 +1,56 @@
-import { 
-  CreateProductController, 
-  GetAllProductController, 
-  GetProductController, 
-  RemoveProductController, 
-  UpdateProductController
+import {
+  CreateProductController,
+  GetAllProductController,
+  GetProductController,
+  RemoveProductController,
+  UpdateProductController,
+  CountProductsController,
+  GetProductByNameController,
 } from "@controllers/produtcts";
 
 import { IProductServices } from "./ProductServiceDependencyManager";
 
 export class ProductControllerDependencyManager {
-  constructor(
-    private readonly productServices: IProductServices
-  ) {}
+  constructor(private readonly productServices: IProductServices) {}
 
   public getProductController() {
     return new GetProductController(this.productServices.getProductService);
   }
 
   public createProductController() {
-    return new CreateProductController(this.productServices.createProductService);
+    return new CreateProductController(
+      this.productServices.createProductService
+    );
   }
 
   public getAllProductController() {
-    return new GetAllProductController(this.productServices.getAllProductService);
+    return new GetAllProductController(
+      this.productServices.getAllProductService
+    );
   }
 
   public removeProductController() {
-    return new RemoveProductController(this.productServices.removeProductService);
+    return new RemoveProductController(
+      this.productServices.removeProductService
+    );
   }
 
   public updateProductController() {
-    return new UpdateProductController(this.productServices.updateProductService);
+    return new UpdateProductController(
+      this.productServices.updateProductService
+    );
+  }
+
+  public countProductsController() {
+    return new CountProductsController(
+      this.productServices.countProductsService
+    );
+  }
+
+  public getProductByNameController() {
+    return new GetProductByNameController(
+      this.productServices.getProductByNameService
+    );
   }
 
   public getProductControllers() {
@@ -39,7 +59,9 @@ export class ProductControllerDependencyManager {
       createProductController: this.createProductController(),
       getAllProductController: this.getAllProductController(),
       removeProductController: this.removeProductController(),
-      updateProductController: this.updateProductController()
+      updateProductController: this.updateProductController(),
+      countProductsController: this.countProductsController(),
+      getProductByNameController: this.getProductByNameController(),
     };
   }
 }

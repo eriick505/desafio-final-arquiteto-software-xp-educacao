@@ -13,23 +13,56 @@ const productRouter = Router();
 const sequelizeStorage = new SequelizeProductStorage();
 const productRepository = new ProductRepository(sequelizeStorage);
 
-const getProductServices = new ProductServiceDependencyManager(productRepository);
-const getProductControllers = new ProductControllerDependencyManager(getProductServices.getProductServices());
+const getProductServices = new ProductServiceDependencyManager(
+  productRepository
+);
+const getProductControllers = new ProductControllerDependencyManager(
+  getProductServices.getProductServices()
+);
 
-const { 
-  getProductController, 
-  createProductController, 
-  getAllProductController, 
-  removeProductController, 
-  updateProductController
+const {
+  getProductController,
+  createProductController,
+  getAllProductController,
+  removeProductController,
+  updateProductController,
+  countProductsController,
+  getProductByNameController,
 } = getProductControllers.getProductControllers();
 
-productRouter.get("/:id", getProductController.handle.bind(getProductController));
-productRouter.post("/", createProductController.handle.bind(createProductController));
-productRouter.get("/", getAllProductController.handle.bind(getAllProductController));
-productRouter.delete("/:id", removeProductController.handle.bind(removeProductController));
-productRouter.patch("/", updateProductController.handle.bind(updateProductController));
+productRouter.post(
+  "/",
+  createProductController.handle.bind(createProductController)
+);
 
-export { 
-  productRouter 
-};
+productRouter.delete(
+  "/:id",
+  removeProductController.handle.bind(removeProductController)
+);
+
+productRouter.patch(
+  "/",
+  updateProductController.handle.bind(updateProductController)
+);
+
+productRouter.get(
+  "/",
+  getAllProductController.handle.bind(getAllProductController)
+);
+
+productRouter.get(
+  "/count",
+  countProductsController.handle.bind(countProductsController)
+);
+
+productRouter.get(
+  "/:id",
+  getProductController.handle.bind(getProductController)
+);
+
+productRouter.get(
+  "/name/:name",
+  getProductByNameController.handle.bind(getProductByNameController)
+);
+
+export { productRouter };

@@ -1,16 +1,20 @@
 import { IProductRepository } from "@models/repositories";
 
-import { 
-  CreateProductService, 
-  GetAllProductService, 
-  GetProductService, 
-  RemoveProductService, 
+import {
+  CreateProductService,
+  GetAllProductService,
+  GetProductService,
+  RemoveProductService,
   UpdateProductService,
-  ICreateProductService, 
-  IGetAllProductService, 
-  IGetProductService, 
-  IRemoveProductService, 
-  IUpdateProductService, 
+  CountProductsService,
+  GetProductByNameService,
+  ICreateProductService,
+  IGetAllProductService,
+  IGetProductService,
+  IRemoveProductService,
+  IUpdateProductService,
+  ICountProductsService,
+  IGetProductByNameService,
 } from "@services/Product";
 
 export interface IProductServices {
@@ -19,12 +23,12 @@ export interface IProductServices {
   getAllProductService: IGetAllProductService;
   removeProductService: IRemoveProductService;
   updateProductService: IUpdateProductService;
+  countProductsService: ICountProductsService;
+  getProductByNameService: IGetProductByNameService;
 }
 
 export class ProductServiceDependencyManager {
-  constructor(
-    private readonly productRepository: IProductRepository
-  ) {}
+  constructor(private readonly productRepository: IProductRepository) {}
 
   private getProductService() {
     return new GetProductService(this.productRepository);
@@ -46,13 +50,23 @@ export class ProductServiceDependencyManager {
     return new UpdateProductService(this.productRepository);
   }
 
+  private countProductsService() {
+    return new CountProductsService(this.productRepository);
+  }
+
+  private getProductByNameService() {
+    return new GetProductByNameService(this.productRepository);
+  }
+
   public getProductServices(): IProductServices {
     return {
       getProductService: this.getProductService(),
       createProductService: this.createProductService(),
       getAllProductService: this.getAllProductService(),
       removeProductService: this.removeProductService(),
-      updateProductService: this.updateProductService()
+      updateProductService: this.updateProductService(),
+      countProductsService: this.countProductsService(),
+      getProductByNameService: this.getProductByNameService(),
     };
   }
 }
