@@ -1,7 +1,6 @@
 import { IProductModel, ProductModel } from "@models/entities/Product";
-import { IStorage } from "./IStorage";
 import { Product } from "@models/entities/sequelize/Product";
-
+import { IStorage } from "./IStorage";
 
 export class SequelizeProductStorage implements IStorage<IProductModel> {
   async create(product: IProductModel): Promise<boolean> {
@@ -22,7 +21,7 @@ export class SequelizeProductStorage implements IStorage<IProductModel> {
     if (!product) {
       return null;
     }
-    
+
     return ProductModel.create(product, product.id);
   }
 
@@ -33,7 +32,7 @@ export class SequelizeProductStorage implements IStorage<IProductModel> {
       return [];
     }
 
-    return products.map(product => ProductModel.create(product, product.id));
+    return products.map((product) => ProductModel.create(product, product.id));
   }
 
   async remove(id: string): Promise<boolean> {
@@ -42,18 +41,33 @@ export class SequelizeProductStorage implements IStorage<IProductModel> {
   }
 
   async update(product: IProductModel): Promise<boolean> {
-    console.log(product, 'product to update')
-    const [updated] = await Product.update({
+    console.log(product, "product to update");
+    const [updated] = await Product.update(
+      {
         name: product.name,
         price: product.price,
         categoryId: product.categoryId,
         rating: product.rating,
-      }, 
-      { 
-        where: { id: product.id }
+      },
+      {
+        where: { id: product.id },
       }
     );
 
     return updated > 0;
+  }
+
+  async findByName(name: string): Promise<IProductModel | null> {
+    const product = await Product.findOne({ where: { name } });
+
+    if (!product) {
+      return null;
+    }
+
+    return ProductModel.create(product, product.id);
+  }
+
+  async count(): Promise<number> {
+    return Product.count();
   }
 }

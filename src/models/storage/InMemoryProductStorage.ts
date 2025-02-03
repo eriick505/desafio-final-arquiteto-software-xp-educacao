@@ -25,4 +25,15 @@ export class InMemoryProductStorage implements IStorage<IProductModel> {
     this.storage.set(product.id, product);
     return true;
   }
+
+  async findByName(name: string): Promise<IProductModel | null> {
+    const product = Array.from(this.storage.values()).find(
+      (product) => product.name === name
+    );
+    return product || null;
+  }
+
+  async count(): Promise<number> {
+    return this.storage.size;
+  }
 }

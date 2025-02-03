@@ -4,4 +4,6 @@ export interface IStorage<T> {
   findAll(): Promise<T[]>;
   remove(id: string): Promise<boolean>;
   update(item: T): Promise<boolean>;
+  findByName(name: string): Promise<T | null>;
+  count(): Promise<number>;
 }

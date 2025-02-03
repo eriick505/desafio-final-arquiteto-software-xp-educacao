@@ -7,6 +7,8 @@ export interface IProductRepository {
   findAll(): Promise<IProductModel[]>;
   remove(id: string): Promise<boolean>;
   update(product: IProductModel): Promise<boolean>;
+  findByName(name: string): Promise<IProductModel | null>;
+  count(): Promise<number>;
 }
 
 export class ProductRepository implements IProductRepository {
@@ -30,5 +32,13 @@ export class ProductRepository implements IProductRepository {
 
   async update(product: IProductModel): Promise<boolean> {
     return await this.storage.update(product);
+  }
+
+  async findByName(name: string): Promise<IProductModel | null> {
+    return await this.storage.findByName(name);
+  }
+
+  async count(): Promise<number> {
+    return await this.storage.count();
   }
 }
