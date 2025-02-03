@@ -21,6 +21,8 @@ type CountProductsResponse =
 export class CountProductsController {
   constructor(private readonly countProductsService: ICountProductsService) {}
 
+  private getRouter = "/products/count";
+
   async handle(req: Request, res: Response<CountProductsResponse>) {
     try {
       console.log(
@@ -35,7 +37,7 @@ export class CountProductsController {
         },
         requestType: RequestTypeEnum.GET,
         message: "Get count of products successfully",
-        url: `/products/count`,
+        url: this.getRouter,
       });
 
       return res.status(200).send(response);
@@ -44,7 +46,7 @@ export class CountProductsController {
         ResponseErrorHandler.responseMessage({
           error: error,
           message: "Internal server error",
-          url: `/products/count`,
+          url: this.getRouter,
         })
       );
     }

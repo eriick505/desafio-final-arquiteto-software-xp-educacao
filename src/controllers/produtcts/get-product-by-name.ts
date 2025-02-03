@@ -23,6 +23,10 @@ export class GetProductByNameController {
     private readonly getProductByNameService: IGetProductByNameService
   ) {}
 
+  private getRouter(name: string) {
+    return `/product/name/${name}`;
+  }
+
   async handle(
     req: Request<{ name: string }>,
     res: Response<GetProductByNameResponse>
@@ -36,7 +40,7 @@ export class GetProductByNameController {
           ResponseErrorHandler.responseMessage({
             error: "Product not found",
             message: "Product not found",
-            url: `/product/name/${name}`,
+            url: this.getRouter(name),
           })
         );
       }
@@ -45,7 +49,7 @@ export class GetProductByNameController {
         data: product,
         requestType: RequestTypeEnum.GET,
         message: "Get Product successfully",
-        url: `/product/name/${name}`,
+        url: this.getRouter(name),
       });
 
       return res.status(200).send(response);
@@ -54,7 +58,7 @@ export class GetProductByNameController {
         ResponseErrorHandler.responseMessage({
           error: error,
           message: "Internal server error",
-          url: `/product/name/${req.params.name}`,
+          url: this.getRouter(req.params.name),
         })
       );
     }
