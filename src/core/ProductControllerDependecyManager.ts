@@ -6,7 +6,7 @@ import {
   UpdateProductController,
   CountProductsController,
   GetProductByNameController,
-} from "@controllers/produtcts";
+} from "@controllers/products";
 
 import { IProductServices } from "./ProductServiceDependencyManager";
 
